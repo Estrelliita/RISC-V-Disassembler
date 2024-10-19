@@ -1,7 +1,7 @@
 FLAGS = -I -DDEBUG
 OFLAG = -o
 
-compile: main.o dissasemle.o
+compile: main.o disassemble.o
 	gcc $(OFLAG) disassembler main.o disassemble.o $(FLAGS)
 
 
