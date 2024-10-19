@@ -30,7 +30,12 @@ int disassemble(unsigned int minstr) {
     unsigned int rs2 = (minstr & RS2MASK) >> 20;
     unsigned int funct7 = (minstr & FUNCT7MASK) >> 25;
 
-    printf("opcode: " + opcode);
+    printf("Opcode: 0x%02X\n", opcode);
+    printf("rd: %d\n", rd);
+    printf("funct3: %d\n", funct3);
+    printf("rs1: %d\n", rs1);
+    printf("rs2: %d\n", rs2);
+    printf("funct7: %d\n", funct7);
   
     return(0);
 }
