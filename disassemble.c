@@ -29,7 +29,7 @@ int disassemble(unsigned int minstr) {
     unsigned int rs1 = (minstr & RS1MASK) >> 15;
     unsigned int rs2 = (minstr & RS2MASK) >> 20;
     unsigned int funct7 = (minstr & FUNCT7MASK) >> 25;
-    signed int immediate;
+    signed int immediate = extract_i_imm(minstr);
     //printf("Opcode: 0x%02X\n", opcode);
     //printf("rd: %d\n", rd);
     //printf("funct3: %d\n", funct3);
@@ -37,7 +37,6 @@ int disassemble(unsigned int minstr) {
     //printf("rs2: %d\n", rs2);
     //printf("funct7: %d\n", funct7);
     
-    extract_i_imm(minstr);
     return(0);
 }
 
