@@ -55,7 +55,8 @@ int disassemble(unsigned int minstr) {
     printf("rs1: %d\n", rs1);
     printf("rs2: %d\n", rs2);
     printf("funct7: 0x%02X\n", funct7);
-    printf("I-type imm: 0x%02X\n", iimm); 
+    printf("I-Type imm: 0x%02X\n", iimm); 
+    printf("R-Type imm: 0x%02X\n", simm);
     
     return(0);
 }
