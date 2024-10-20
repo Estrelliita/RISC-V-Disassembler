@@ -44,7 +44,7 @@ int disassemble(unsigned int minstr) {
     printf("rs1: %d\n", rs1);
     printf("rs2: %d\n", rs2);
     printf("funct7: 0x%02X\n", funct7);
-    printf("I-type imm: %d\n", iimm); 
+    printf("I-type imm: 0x%02X\n", iimm); 
     
     return(0);
 }
