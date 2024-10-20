@@ -1,0 +1,6 @@
+add   x5, x5, x6
+sw    x5, -8(x10)
+addi  x10, x10, 4
+slli  x5, x5, 6
+srai  x6, x6, 2
+lw    x7, -4(x10)
