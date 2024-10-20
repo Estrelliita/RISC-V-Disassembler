@@ -21,6 +21,15 @@ char mnemonics[NINSTRUCTIONS][5] = {
     "sw  "
 };
 
+signed int extract_i_imm(unsigned int minstr){
+    signed int imm = (minstr & 0xfff00000) >> 20;
+    if (imm & 0x800) { // Check if negative
+      imm |= 0xfffff000; // Sign-extend if necessary
+    }
+    printf("The immediate value is: %d\n", imm); 
+    return imm;
+}
+
 int disassemble(unsigned int minstr) {
 
     unsigned int opcode = (minstr & OPCODEMASK);
@@ -38,14 +47,5 @@ int disassemble(unsigned int minstr) {
     //printf("funct7: %d\n", funct7);
     
     return(0);
-}
-
-signed int extract_i_imm(unsigned int minstr){
-    signed int imm = (minstr & 0xfff00000) >> 20;
-    if (imm & 0x800) { // Check if negative
-      imm |= 0xfffff000; // Sign-extend if necessary
-    }
-    printf("The immediate value is: %d\n", imm); 
-    return imm;
 }
             
