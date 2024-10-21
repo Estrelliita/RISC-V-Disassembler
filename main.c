@@ -22,6 +22,7 @@ int main()
 
     while (get_str(instrstr, MAXINSTRLENGTH+1)) {   
         minstr = (unsigned int) strtoul(instrstr, NULL, 16);
+        printf("Instruction to disassemble: %08x\n", minstr);
 #ifdef DEBUG
         printf("Instruction to disassemble: %08x\n", minstr);
 #endif
