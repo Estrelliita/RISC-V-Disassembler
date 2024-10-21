@@ -2,23 +2,23 @@
 #include "disassemble.h"
 
 char mnemonics[NINSTRUCTIONS][5] = {
-    "add ",
-    "sub ",
-    "and ",
-    "or  ",
-    "xor ",
-    "sll ",
-    "srl ",
-    "sra ",
-    "addi",
-    "andi",
-    "ori ",
-    "xori",
-    "slli",
+    "add ", //0
+    "sub ", //1
+    "and ", //2
+    "or  ", //3
+    "xor ", //4
+    "sll ", //5
+    "srl ", //6
+    "sra ", //7
+    "addi", //8
+    "andi", //9
+    "ori ", //10
+    "xori", //11
+    "slli", //12
     "srli",
-    "srai",
+    "srai", //14
     "lw  ",
-    "sw  "
+    "sw  " //16
 };
 
 signed int extract_i_imm(unsigned int minstr){
@@ -60,69 +60,82 @@ int disassemble(unsigned int minstr) {
     printf("rs1: %d\n", rs1);
     printf("rs2: %d\n", rs2);
     printf("funct7: 0x%02X\n", funct7);
-    printf("I-Type imm: 0x%02X\n", iimm); 
-    printf("R-Type imm: 0x%02X\n", simm);
+    printf("I-Type imm: %d\n", iimm); 
+    printf("R-Type imm: %d\n", simm);
 
     switch (opcode) {
       case 0x33: // R-type instructions
         switch (funct3) {
           case 0x0: 
-            if (funct7 == 0x00) {
+            if (funct7 == 0x00) { 
+              //add
               sprintf(instr, "%s, x%d, x%d, x%d", mnemonics[0], rd, rs1, rs2); break;
             } else if (funct7 == 0x20) {
+              //sub
               sprintf(instr, "%s, x%d, x%d, x%d", mnemonics[1], rd, rs1, rs2); break;
             } 
             break;
-          case 0x1: printf("sll "); break;
-          case 0x2: printf("slt "); break;
-          case 0x4: printf("xor "); break;
+          //xor
+          case 0x1: sprintf(instr, "%s, x%d, x%d, x%d", mnemonics[5], rd, rs1, rs2); break;
+          //srl
+          case 0x4: sprintf(instr, "%s, x%d, x%d, x%d", mnemonics[4], rd, rs1, rs2); break;
           case 0x5: 
             if (funct7 == 0x00) {
-              printf("srl "); 
+              //srl
+              sprintf(instr, "%s, x%d, x%d, x%d", mnemonics[6], rd, rs1, rs2); break; 
             } else if (funct7 == 0x20) {
-              printf("sra ");
-            } 
-            break;
-          case 0x6: printf("or  "); break;
-          case 0x7: printf("and "); break;
-          default: printf("Unknown R-type instruction\n");
+              //sra
+              sprintf(instr, "%s, x%d, x%d, x%d", mnemonics[7], rd, rs1, rs2); break;
+            } break;
+          //or
+          case 0x6: sprintf(instr, "%s, x%d, x%d, x%d", mnemonics[3], rd, rs1, rs2); break;
+          //and
+          case 0x7: sprintf(instr, "%s, x%d, x%d, x%d", mnemonics[2], rd, rs1, rs2); break;
+          default: printf("Unknown R-type instruction\n"); exit(-1);
     }
-    // ... (code to print rd, rs1, rs2) ...
     break;
 
-  case 0x13: // I-type instructions (arithmetic and logical)
-    switch (funct3) {
-      case 0x0: printf("addi"); break;
-      case 0x4: printf("xori"); break;
-      case 0x6: printf("ori "); break;
-      case 0x7: printf("andi"); break;
-      default: printf("Unknown I-type instruction\n"); 
-    }
-    // ... (code to print rd, rs1, immediate) ...
-    break;
-
-  case 0x03: // I-type instructions (load)
-    switch (funct3) {
-      case 0x2: printf("lw  "); break; 
-      // ... (add cases for other load instructions like lh, lb, lhu, lbu) ...
-      default: printf("Unknown load instruction\n");
-    }
-    // ... (code to print rd, rs1, immediate) ...
-    break;
-
-  case 0x23: // S-type instructions (store)
-    switch (funct3) {
-      case 0x2: printf("sw  "); break;
-      // ... (add cases for other store instructions like sh, sb) ...
-      default: printf("Unknown store instruction\n");
-    }
-    // ... (code to print rs2, rs1, immediate) ...
-    break;
-
-  // ... (add cases for other opcode types as needed) ... 
-
-  default: printf("Unknown instruction\n");
-  }
+      case 0x13: // I-type instructions (arithmetic and logical)
+        switch (funct3) {
+          //addi
+          case 0x0: sprintf(instr, "x%d, x%d, %d", mnemonics[8], rd, rs1, rs2); break;
+          //slli
+          case 0x1: sprintf(instr, "x%d, x%d, %d", mnemonics[12], rd, rs1, rs2); break;
+          //xori
+          case 0x4: sprintf(instr, "x%d, x%d, %d", mnemonics[11], rd, rs1, rs2); break;
+          //ori
+          case 0x5: 
+            //I am using funct7 even though immediate does not use it because it uses exactly the bits 11:5
+            if (funct7 == 0x00){
+                //srli
+                sprintf(instr, "x%d, x%d, %d", mnemonics[13], rd, rs1, rs2); break;
+            }
+            else if (funct7 == 0x20){
+                //srai
+                sprintf(instr, "x%d, x%d, %d", mnemonics[14], rd, rs1, rs2); break;
+            } break;
+          case 0x6: sprintf(instr, "x%d, x%d, %d", mnemonics[10], rd, rs1, rs2); break;
+          //andi 
+          case 0x7: sprintf(instr, "x%d, x%d, %d", mnemonics[9], rd, rs1, rs2); break;
+          default: printf("Unknown or unimplemented I-type instruction\n"); exit(-1);
+        } break;
+    
+      case 0x03: // I-type instructions (load)
+        switch (funct3) {
+          //lw
+          case 0x2: sprintf(instr, "x%d, %d(x%d)", mnemonics[15], rd, iimm, rs2); break; 
+          default: printf("Unknown or unimplemented I-type instruction\n"); exit(-1);
+        } break;
+    
+      case 0x23: // S-type instructions (store)
+        switch (funct3) {
+          //sw
+          case 0x2: sprintf(instr, "x%d, %d(x%d)", mnemonics[16], rd, iimm, rs2); break;
+          default: printf("Unknown store instruction\n"); exit(-1);
+        } break;   
+    
+      default: printf("Unknown instruction\n"); exit(-1);
+    } 
     printf("%s\n", instr);  
     return(0);
 }
