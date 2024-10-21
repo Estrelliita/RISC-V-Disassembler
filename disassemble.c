@@ -113,7 +113,7 @@ int disassemble(unsigned int minstr) {
             }
             else if (funct7 == 0x20){
                 //srai
-                sprintf(instr, "%s x%d, x%d, %d", mnemonics[14], rd, rs1, iimm); break;
+                sprintf(instr, "%s x%d, x%d, %d", mnemonics[14], rd, rs1, shamt); break;
                 
             } break;
           //ori
