@@ -59,10 +59,10 @@ int disassemble(unsigned int minstr) {
     printf("rd: %d\n", rd);
     printf("funct3: %d\n", funct3);
     printf("rs1: %d\n", rs1);
-    printf("rs2: %d\n", rs2);
-    printf("funct7: 0x%02X\n", funct7);
+    //printf("rs2: %d\n", rs2);
+    //printf("funct7: 0x%02X\n", funct7);
     printf("I-Type imm: %d\n", iimm); 
-    printf("S-Type imm: %d\n", simm);
+    //printf("S-Type imm: %d\n", simm);
 
     switch (opcode) {
       case 0x33: // R-type instructions
