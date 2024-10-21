@@ -124,7 +124,7 @@ int disassemble(unsigned int minstr) {
       case 0x03: // I-type instructions (load)
         switch (funct3) {
           //lw
-          case 0x2: sprintf(instr, "%s x%d, %d(x%d)", mnemonics[15], rd, iimm, rs2); break; 
+          case 0x2: sprintf(instr, "%s x%d, %d(x%d)", mnemonics[15], rd, iimm, rs1); break; 
           default: printf("Unknown or unimplemented I-type instruction\n"); exit(-1);
         } break;
     
