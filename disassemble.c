@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "disassemble.h"
+#include <stdlib.h>
 
 char mnemonics[NINSTRUCTIONS][5] = {
     "add ", //0
