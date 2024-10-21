@@ -111,16 +111,13 @@ int disassemble(unsigned int minstr) {
             //I am using funct7 even though immediate does not use it because it uses exactly the bits 11:5
             if (funct7 == 0x00){
                 //srli
-                if (iimm < 0){
-                    sprintf(instr, "%s x%d, x%d, %d", mnemonics[13], rd, rs1, iimm); break;
-                }
-                else {printf("Shift immediate can't be negative\n"); exit(-1);}
+                int shamt = (minstr & 0x01F00000) >> 20; 
+                sprintf(instr, "%s x%d, x%d, %d", mnemonics[13], rd, rs1, shamt); break;
             }
             else if (funct7 == 0x20){
                 //srai
-                if (iimm < 0){
-                    sprintf(instr, "%s x%d, x%d, %d", mnemonics[14], rd, rs1, iimm); break;
-                } else { printf("Shift immediate can't be negative\n"); exit(-1);}
+                sprintf(instr, "%s x%d, x%d, %d", mnemonics[14], rd, rs1, iimm); break;
+                
             } break;
           //ori
           case 0x6: sprintf(instr, "%s x%d, x%d, %d", mnemonics[10], rd, rs1, iimm); break;
