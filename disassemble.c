@@ -53,6 +53,7 @@ int disassemble(unsigned int minstr) {
     unsigned int funct7 = (minstr & FUNCT7MASK) >> 25;
     signed int iimm = extract_i_imm(minstr);
     signed int simm = extract_s_imm(minstr);
+    int shamt = (minstr & 0x01F00000) >> 20; 
 
     //Debugging print statements
     printf("Opcode: 0x%02X\n", opcode);
@@ -102,16 +103,12 @@ int disassemble(unsigned int minstr) {
           case 0x0: sprintf(instr, "%s x%d, x%d, %d", mnemonics[8], rd, rs1, iimm); break;
           //slli
           case 0x1: 
-              if (iimm < 0){
-                  sprintf(instr, "%s x%d, x%d, %d", mnemonics[12], rd, rs1, iimm); break;
-              } else {printf("Shift immediate can't be negative\n"); exit(-1);}
-          //xori
+            sprintf(instr, "%s x%d, x%d, %d", mnemonics[12], rd, rs1, iimm); break;
           case 0x4: sprintf(instr, "%s x%d, x%d, %d", mnemonics[11], rd, rs1, iimm); break;
           case 0x5: 
             //I am using funct7 even though immediate does not use it because it uses exactly the bits 11:5
             if (funct7 == 0x00){
                 //srli
-                int shamt = (minstr & 0x01F00000) >> 20; 
                 sprintf(instr, "%s x%d, x%d, %d", mnemonics[13], rd, rs1, shamt); break;
             }
             else if (funct7 == 0x20){
