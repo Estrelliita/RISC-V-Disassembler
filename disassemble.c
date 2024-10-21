@@ -56,13 +56,13 @@ int disassemble(unsigned int minstr) {
     int shamt = (minstr & 0x01F00000) >> 20; 
 
     //Debugging print statements
-    printf("Opcode: 0x%02X\n", opcode);
-    printf("rd: %d\n", rd);
-    printf("funct3: %d\n", funct3);
-    printf("rs1: %d\n", rs1);
+    // printf("Opcode: 0x%02X\n", opcode);
+    // printf("rd: %d\n", rd);
+    // printf("funct3: %d\n", funct3);
+    // printf("rs1: %d\n", rs1);
     //printf("rs2: %d\n", rs2);
     //printf("funct7: 0x%02X\n", funct7);
-    printf("I-Type imm: %d\n", iimm); 
+    //printf("I-Type imm: %d\n", iimm); 
     //printf("S-Type imm: %d\n", simm);
 
     switch (opcode) {
